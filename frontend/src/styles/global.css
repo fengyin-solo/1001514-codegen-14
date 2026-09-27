@@ -33,3 +33,38 @@ body { margin: 0; background: #f6f8fb; color: #1f2937; }
 .link { border: none; background: none; color: var(--brand); cursor: pointer; padding: 0; }
 .page-foot { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--muted); }
 .error-text { color: #b42318; }
+
+/* 巡检问题分布视图 */
+.dist-panel { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
+.dist-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.dist-title { margin: 0 0 4px; font-size: 15px; }
+.scope-item select { border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; background: #fff; min-width: 140px; }
+.dist-grid { display: flex; gap: 12px; margin-top: 10px; }
+.dist-card { flex: 1; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.dist-card h4 { margin: 0 0 8px; font-size: 13px; color: var(--muted); }
+.dist-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.dist-row { display: flex; align-items: center; gap: 8px; font-size: 13px; width: 100%; }
+.dist-person { border: none; background: none; padding: 0; cursor: pointer; text-align: left; }
+.dist-person:hover .dist-name { color: var(--brand); }
+.dist-name { min-width: 72px; }
+.dist-bar { flex: 1; height: 8px; background: #eef2f7; border-radius: 4px; overflow: hidden; }
+.dist-bar i { display: block; height: 100%; background: var(--brand); border-radius: 4px; }
+.dist-num { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.dist-toggle { color: var(--brand); font-size: 12px; white-space: nowrap; }
+.dist-person-block { display: flex; flex-direction: column; gap: 6px; }
+.person-orders { border: 1px dashed var(--border); border-radius: 6px; padding: 8px; }
+.dist-note { margin: 6px 0 0; font-size: 12px; color: var(--muted); }
+.dist-empty { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+.month-card { display: flex; flex-direction: column; }
+.month-value { font-size: 32px; margin: 4px 0; }
+.excluded-box { margin-top: 10px; border: 1px solid #f0c36d; background: #fffaf0; border-radius: 8px; padding: 8px 12px; }
+.excluded-box h4 { margin: 0 0 6px; font-size: 13px; }
+.excluded-box ul { margin: 0; padding-left: 18px; font-size: 12px; color: #7a5b16; }
+
+/* 巡检单明细弹窗 */
+.modal-mask { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); display: flex; align-items: center; justify-content: center; z-index: 10; }
+.modal-box { background: #fff; border-radius: 10px; padding: 16px 20px; width: 420px; max-width: 90vw; }
+.detail-list { display: grid; grid-template-columns: 96px 1fr; gap: 6px 12px; margin: 12px 0; font-size: 13px; }
+.detail-list dt { color: var(--muted); }
+.detail-list dd { margin: 0; }
+.modal-actions { display: flex; justify-content: flex-end; }

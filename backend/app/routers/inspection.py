@@ -16,17 +16,40 @@ LIST_FIELDS = ["巡检单号", "巡检站点", "巡检人员", "巡检日期", "
 STATUSES = ["待派发", "巡检中", "已提交", "已作废"]
 
 
+@router.get("/distribution")
+def get_distribution(
+    station: str | None = Query(default=None, description="站点范围，精确匹配巡检站点；为空表示全部站点"),
+) -> dict[str, Any]:
+    """巡检问题分布：按站点、按人员汇总发现问题数与本月发现总量。
+
+    巡检人员或发现问题数未填的巡检单不进入分布，逐条说明缺哪一项；
+    站点范围内没有数据时返回说明文案，不报错。
+    """
+    return service.distribution(station=station)
+
+
+@router.get("/export")
+def export_entries() -> dict[str, Any]:
+    """导出巡检任务清单：返回当前过滤条件下的全量数据。"""
+    items, total = service.list_entries(page=1, size=10000)
+    return {"module": "inspection", "total": total, "items": items}
+
+
 @router.get("", response_model=PageResult[dict])
 def list_entries(
     keyword: str | None = Query(default=None, description="按巡检单号检索"),
     status: str | None = Query(default=None, description="待派发、巡检中、已提交、已作废"),
+    station: str | None = Query(default=None, description="按巡检站点精确筛选，与分布视图同一口径"),
+    person: str | None = Query(default=None, description="按巡检人员精确筛选，用于分布下钻"),
     page: int = 1,
     size: int = 20,
 ) -> PageResult[dict]:
-    """按巡检单号与状态过滤巡检任务列表；没有数据时返回空页，不报错。"""
+    """按巡检单号、状态、站点、人员过滤巡检任务列表；没有数据时返回空页，不报错。"""
     if size > 200:
         raise HTTPException(status_code=400, detail="每页最多 200 条，请缩小分页范围")
-    items, total = service.list_entries(keyword=keyword, status=status, page=page, size=size)
+    items, total = service.list_entries(
+        keyword=keyword, status=status, station=station, person=person, page=page, size=size
+    )
     return PageResult(items=items, total=total, page=page, size=size)
 
 
@@ -56,10 +79,3 @@ def run_action(entry_id: int, payload: EntryPayload) -> ActionResult:
     if entry is None:
         return ActionResult(ok=False, message=message)
     return ActionResult(ok=True, message=message, entry=entry)
-
-
-@router.get("/export")
-def export_entries() -> dict[str, Any]:
-    """导出巡检任务清单：返回当前过滤条件下的全量数据。"""
-    items, total = service.list_entries(page=1, size=10000)
-    return {"module": "inspection", "total": total, "items": items}
