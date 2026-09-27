@@ -10,6 +10,7 @@ const Transmission = () => import('@/views/transmission/index.vue')
 const Power = () => import('@/views/power/index.vue')
 const Layout = () => import('@/views/layout/index.vue')
 const Inspection = () => import('@/views/inspection/index.vue')
+const InspectionDetail = () => import('@/views/inspection/detail.vue')
 const Fault = () => import('@/views/fault/index.vue')
 const Sparepart = () => import('@/views/sparepart/index.vue')
 const Metainfo = () => import('@/views/metainfo/index.vue')
@@ -33,6 +34,7 @@ const router = createRouter({
     { path: '/power', name: 'power', component: Power },
     { path: '/layout', name: 'layout', component: Layout },
     { path: '/inspection', name: 'inspection', component: Inspection },
+    { path: '/inspection/:id', name: 'inspection-detail', component: InspectionDetail },
     { path: '/fault', name: 'fault', component: Fault },
     { path: '/sparepart', name: 'sparepart', component: Sparepart },
     { path: '/metainfo', name: 'metainfo', component: Metainfo },
